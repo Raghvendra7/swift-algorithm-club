@@ -10,7 +10,7 @@ public class BloomFilter<T> {
   }
 
   private func computeHashes(_ value: T) -> [Int] {
-    return hashFunctions.map() { hashFunc in abs(hashFunc(value) % array.count) }
+    return hashFunctions.map { hashFunc in abs(hashFunc(value) % array.count) }
   }
 
   public func insert(_ element: T) {
@@ -29,7 +29,7 @@ public class BloomFilter<T> {
     let hashValues = computeHashes(value)
 
     // Map hashes to indices in the Bloom Filter
-    let results = hashValues.map() { hashValue in array[hashValue] }
+    let results = hashValues.map { hashValue in array[hashValue] }
 
     // All values must be 'true' for the query to return true
 
@@ -47,13 +47,11 @@ public class BloomFilter<T> {
   }
 }
 
-
-
 /* Two hash functions, adapted from http://www.cse.yorku.ca/~oz/hash.html */
 
 func djb2(x: String) -> Int {
   var hash = 5381
-  for char in x.characters {
+  for char in x {
     hash = ((hash << 5) &+ hash) &+ char.hashValue
   }
   return Int(hash)
@@ -61,13 +59,11 @@ func djb2(x: String) -> Int {
 
 func sdbm(x: String) -> Int {
   var hash = 0
-  for char in x.characters {
+  for char in x {
     hash = char.hashValue &+ (hash << 6) &+ (hash << 16) &- hash
   }
   return Int(hash)
 }
-
-
 
 /* A simple test */
 

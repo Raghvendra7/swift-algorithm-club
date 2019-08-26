@@ -1,4 +1,5 @@
 //: Playground - noun: a place where people can play
+// Last checked with: Version 10.0 (10A255)
 
 func twoSumProblem(_ a: [Int], k: Int) -> ((Int, Int))? {
   var i = 0

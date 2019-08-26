@@ -29,9 +29,6 @@ print(bits)
 
 print("")
 
-
-
-
 // Bitwise operations
 
 var a = BitSet(size: 4)
@@ -69,9 +66,6 @@ print(~c)  // 0101110000000000000000000000000000000000000000000000000000000000
 (~b).cardinality  // 5
 (~c).cardinality  // 4
 
-
-
-
 var z = BitSet(size: 66)
 z.all0()        // true
 z.all1()        // false
@@ -93,8 +87,25 @@ z.all1()        // true
 z[65] = false
 z.all1()        // false
 
-
-
-
 //var bigBits = BitSet(size: 10000)
 //print(bigBits)
+
+var smallBitSet = BitSet(size: 16)
+smallBitSet[5] = true
+smallBitSet[10] = true
+print(smallBitSet >> 3)
+print(smallBitSet << 6) // one bit shifts off the end
+
+var bigBitSet = BitSet( size: 120 )
+bigBitSet[1] = true
+bigBitSet[3] = true
+bigBitSet[7] = true
+bigBitSet[32] = true
+bigBitSet[55] = true
+bigBitSet[64] = true
+bigBitSet[80] = true
+print(bigBitSet)
+print(bigBitSet << 32)
+print(bigBitSet << 64)
+print(bigBitSet >> 32)
+print(bigBitSet >> 64)

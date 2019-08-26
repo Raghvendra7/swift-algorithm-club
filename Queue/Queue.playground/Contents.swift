@@ -34,13 +34,10 @@ public struct Queue<T> {
     }
   }
 
-  public func peek() -> T? {
+  public var front: T? {
     return array.first
   }
 }
-
-
-
 
 // Create a queue and put some elements on it already.
 var queueOfNames = Queue(array: ["Carl", "Lisa", "Stephanie", "Jeff", "Wade"])
@@ -56,7 +53,7 @@ queueOfNames.dequeue()
 
 // Return the first element in the queue.
 // Returns "Lisa" since "Carl" was dequeued on the previous line.
-queueOfNames.peek()
+queueOfNames.front
 
 // Check to see if the queue is empty.
 // Returns "false" since the queue still has elements in it.

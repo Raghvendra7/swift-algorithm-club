@@ -62,7 +62,7 @@ Now, we can say:
 
 This had been know since the 19th century. The problem is that the method requires 4 multiplications (`a*c`, `a*d`, `b*c`, `b*d`). Karatsuba's insight was that you only need three! (`a*c`, `b*d`, `(a+b)*(c+d)`). Now a perfectly valid question right now would be "How is that possible!?!" Here's the math:
 
-        (a+b)*(c+d) - a*c - b*c  = (a*c + a*d + b*c + b*d) - a*c - b*c
+        (a+b)*(c+d) - a*c - b*d  = (a*c + a*d + b*c + b*d) - a*c - b*d
                                  = (a*d + b*c)
 
 Pretty cool, huh?
@@ -72,14 +72,14 @@ Here's the full implementation. Note that the recursive algorithm is most effici
 ```swift
 // Karatsuba Multiplication
 func karatsuba(_ num1: Int, by num2: Int) -> Int {
-  let num1Array = String(num1).characters
-  let num2Array = String(num2).characters
+  let num1String = String(num1)
+  let num2String = String(num2)
   
-  guard num1Array.count > 1 && num2Array.count > 1 else {
-    return num1*num2
+  guard num1String.count > 1 && num2String.count > 1 else {
+    return multiply(num1, by: num2)
   }
   
-  let n = max(num1Array.count, num2Array.count)
+  let n = max(num1String.count, num2String.count)
   let nBy2 = n / 2
   
   let a = num1 / 10^^nBy2
@@ -115,10 +115,10 @@ What about the running time of this algorithm? Is all this extra work worth it? 
  
 ## Resources
 
-[Wikipedia] (https://en.wikipedia.org/wiki/Karatsuba_algorithm)
+[Wikipedia](https://en.wikipedia.org/wiki/Karatsuba_algorithm)
 
-[WolframMathWorld] (http://mathworld.wolfram.com/KaratsubaMultiplication.html) 
+[WolframMathWorld](http://mathworld.wolfram.com/KaratsubaMultiplication.html) 
 
-[Master Theorem] (https://en.wikipedia.org/wiki/Master_theorem)
+[Master Theorem](https://en.wikipedia.org/wiki/Master_theorem)
 
 *Written for Swift Algorithm Club by Richard Ash*

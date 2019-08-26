@@ -20,12 +20,9 @@
 //
 //
 
-import Foundation
-
 //////////////////////////////////////
 // MARK: Main algorithm
 //////////////////////////////////////
-
 
 /**
     Performs bucket sort algorithm on the given input elements.
@@ -39,7 +36,7 @@ import Foundation
     - Returns: A new array with sorted elements
  */
 
-public func bucketSort<T: Sortable>(elements: [T], distributor: Distributor, sorter: Sorter, buckets: [Bucket<T>]) -> [T] {
+public func bucketSort<T>(_ elements: [T], distributor: Distributor, sorter: Sorter, buckets: [Bucket<T>]) -> [T] {
     precondition(allPositiveNumbers(elements))
     precondition(enoughSpaceInBuckets(buckets, elements: elements))
 
@@ -57,24 +54,27 @@ public func bucketSort<T: Sortable>(elements: [T], distributor: Distributor, sor
     return results
 }
 
-private func allPositiveNumbers<T: Sortable>(array: [T]) -> Bool {
+private func allPositiveNumbers<T: Sortable>(_ array: [T]) -> Bool {
     return array.filter { $0.toInt() >= 0 }.count > 0
 }
 
-private func enoughSpaceInBuckets<T: Sortable>(buckets: [Bucket<T>], elements: [T]) -> Bool {
-    let maximumValue = elements.maxElement()?.toInt()
+private func enoughSpaceInBuckets<T>(_ buckets: [Bucket<T>], elements: [T]) -> Bool {
+    let maximumValue = elements.max()?.toInt()
     let totalCapacity = buckets.count * (buckets.first?.capacity)!
 
-    return totalCapacity >= maximumValue
+    guard let max = maximumValue else {
+        return false
+    }
+    
+    return totalCapacity >= max
 }
 
 //////////////////////////////////////
 // MARK: Distributor
 //////////////////////////////////////
 
-
 public protocol Distributor {
-    func distribute<T: Sortable>(element: T, inout buckets: [Bucket<T>])
+    func distribute<T>(_ element: T, buckets: inout [Bucket<T>])
 }
 
 /*
@@ -96,7 +96,7 @@ public struct RangeDistributor: Distributor {
 
     public init() {}
 
-    public func distribute<T: Sortable>(element: T, inout buckets: [Bucket<T>]) {
+    public func distribute<T>(_ element: T, buckets: inout [Bucket<T>]) {
         let value = element.toInt()
         let bucketCapacity = buckets.first!.capacity
 
@@ -121,14 +121,14 @@ public protocol Sortable: IntConvertible, Comparable {
 //////////////////////////////////////
 
 public protocol Sorter {
-    func sort<T: Sortable>(items: [T]) -> [T]
+    func sort<T: Sortable>(_ items: [T]) -> [T]
 }
 
 public struct InsertionSorter: Sorter {
 
     public init() {}
 
-    public func sort<T: Sortable>(items: [T]) -> [T] {
+    public func sort<T: Sortable>(_ items: [T]) -> [T] {
         var results = items
         for i in 0 ..< results.count {
             var j = i
@@ -149,7 +149,7 @@ public struct InsertionSorter: Sorter {
 // MARK: Bucket
 //////////////////////////////////////
 
-public struct Bucket<T:Sortable> {
+public struct Bucket<T: Sortable> {
     var elements: [T]
     let capacity: Int
 
@@ -158,13 +158,13 @@ public struct Bucket<T:Sortable> {
         elements = [T]()
     }
 
-    public mutating func add(item: T) {
+    public mutating func add(_ item: T) {
         if elements.count < capacity {
             elements.append(item)
         }
     }
 
-    public func sort(algorithm: Sorter) -> [T] {
+    public func sort(_ algorithm: Sorter) -> [T] {
         return algorithm.sort(elements)
     }
 }

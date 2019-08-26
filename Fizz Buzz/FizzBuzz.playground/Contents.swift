@@ -1,3 +1,5 @@
+// last checked with Xcode 10.0 (10A255)
+
 func fizzBuzz(_ numberOfTurns: Int) {
   for i in 1...numberOfTurns {
     var result = ""

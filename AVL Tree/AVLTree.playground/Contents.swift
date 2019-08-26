@@ -1,5 +1,6 @@
 //: Playground - noun: a place where people can play
 
+
 let tree = AVLTree<Int, String>()
 
 tree.insert(key: 5, payload: "five")

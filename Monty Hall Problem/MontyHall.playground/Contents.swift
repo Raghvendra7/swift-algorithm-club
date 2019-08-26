@@ -43,7 +43,7 @@ func playRound() {
 }
 
 // Run the simulation a large number of times.
-for i in 1...5000 {
+for _ in 1...5000 {
   playRound()
 }
 
